@@ -1,0 +1,10 @@
+user 
+abel
+123 
+
+doctor 
+faris 
+123
+
+admin 
+12345

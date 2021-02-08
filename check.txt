@@ -1,0 +1,61 @@
+<?php //btn check
+                        if (isset($_POST['check'])) {
+                          if (empty($errors)) {
+                            $appt_start =  $_POST['appt_start'];
+                            $appt_end =  $_POST['appt_end'];
+                            $appt_add =  $_POST['appt_add'];
+
+                            $query2 = "SELECT * FROM doctor WHERE doc_id NOT IN (SELECT d.doc_id FROM appointment as a INNER JOIN doctor as d ON a.doc = d.doc_id 
+                              WHERE doc != 0 and '$appt_add' between appt_start and appt_end group by doc)";
+
+                            $result2 = mysqli_query($dbc, $query2) or die(mysqli_error($dbc));
+                            $num = mysqli_num_rows($result2);
+
+                            if ($num > 0) {
+                        ?>
+                              <table id="datatable-buttons" class="table table-striped" style="width:100%">
+                                <thead>
+                                  <tr>
+                                    <th width="20px"> Doctor ID </th>
+                                    <th>Doctor Available</th>
+                                    <th> Assign Doctor </th>
+                                  </tr>
+                                </thead>
+                                <?php
+                                while ($row2 = mysqli_fetch_assoc($result2)) {
+
+                                  $add = date_create($appt_add);
+                                  $add = date_format($add, "Y-m-d G:i:a"); //appt_add
+                                  $appt_end = $_POST['appt_add'];
+                                  $e = date_create($appt_end);
+                                  $e->modify('+30minutes');
+                                  $e = date_format($e, "Y-m-d G:i:a"); //appt_end
+                                ?>
+                                  <tr>
+                                    <input id="add" class="form-control" type="hidden" name="add" value='<?= $add ?>' required>
+                                    <input id="add_end" class="form-control" type="hidden" name="add_end" value='<?= $e ?>'>
+                                    <td><?= $row2['doc_id'] ?></td>
+                                    <td><?= $row2['doc_name'] ?></td>
+                                    <!-- <td><button class="btn btn-success" type="submit" values="submit" name="submit"> Set up appointment </button> </a></td> -->
+
+                                    <form action="addappt.php" method="post">
+                                      <td>
+                                        <div class="input-group">
+                                          <input type="hidden" name="mykid" value="<?= $row['mykid'] ?>" />
+                                          <input type="hidden" name="id_appt" value="<?= $row['id_appt'] ?>" />
+                                          <input type="hidden" name="doc_id" value="<?= $row2['doc_id'] ?>" />
+                                          <button type="submit" name="submit" class="btn btn-success">Set up appointment</button>
+                                        </div>
+                                      </td>
+                                    </form>
+
+                                  </tr> <?php }   //end for while     ?>
+                              </table>
+                        <?php
+                            } //end of num > 0
+                             else {
+                              echo "No Doctor available. Please select another date/time";
+                            } //end of else 
+                          } //end of empty error
+                        } //end of if check 
+                        ?>
