@@ -18,7 +18,7 @@ include_once "header.php";
         <div class="">
           <div class="page-title">
             <div class="title_left">
-              <h3>Set Up Appointment</h3>
+              <h3>Update Appointment</h3>
             </div>
 
             <div class="title_right">
@@ -29,7 +29,7 @@ include_once "header.php";
 
           <div class="clearfix"></div>
           <div class="row">
-            <?php
+          <?php
             require_once('mysql_connect.php');
             $mykid = $_GET['mykid'];
             $id_appt = $_GET['id_appt'];
@@ -50,8 +50,7 @@ include_once "header.php";
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-
-                  <form action="addappt.php?mykid=<?= $_GET['mykid'] ?>&id_appt=<?= $_GET['id_appt'] ?>" method="post">
+                <form action="editappt.php?mykid=<?= $_GET['mykid'] ?>&id_appt=<?= $_GET['id_appt'] ?>" method="post">
                     <div class="item form-group">
                       <label for="appt_type" class="col-form-label col-md-3 col-sm-3 label-align"> Vaccine Type <span class="required">*</span>
                       </label>
@@ -112,7 +111,7 @@ include_once "header.php";
                             <tr>
                               <td><?= $row2['doc_id'] ?></td>
                               <td><?= $row2['doc_name'] ?></td>
-                              <form action="addappt.php?mykid=<?= $_GET['mykid'] ?>&id_appt=<?= $_GET['id_appt'] ?>" method="post">
+                              <form action="editappt.php?mykid=<?= $_GET['mykid'] ?>&id_appt=<?= $_GET['id_appt'] ?>" method="post">
                                 <td>
                                   <div class="input-group">
                                     <!-- <?= $row2['doc_id'] ?> -->
@@ -141,7 +140,7 @@ include_once "header.php";
               </div>
               <div class="item form-group">
                 <div class="col-md-6 col-sm-6 offset-md-3">
-                  <a href="patientprofile.php?mykid=<?= $mykid ?>"><button class="btn btn-primary" type="button">Cancel</button></a>
+                  <a href="listreports.php?mykid=<?= $mykid ?>"><button class="btn btn-primary" type="button">Cancel</button></a>
                 </div>
               </div>
             </div>
@@ -156,7 +155,7 @@ include_once "header.php";
     if (empty($errors)) {
       $add = $_POST['add'];
 
-      $query = "UPDATE appointment SET appt_start='" . $_POST['add'] . "',appt_end='" . $_POST['add_end'] . "',  appt_status='Scheduled', doc='" . $_POST['doc_id'] . "', doc_name ='".$_POST['doc_name']."'
+      $query = "UPDATE appointment SET appt_start='" . $_POST['add'] . "',appt_end='" . $_POST['add_end'] . "',  appt_status='Scheduled', doc='" . $_POST['doc_id'] . "', doc_name='" . $_POST['doc_name'] . "'
           WHERE id_appt=$id_appt";
       $result = mysqli_query($dbc, $query) or die(mysqli_error($dbc));
   ?>
@@ -165,15 +164,15 @@ include_once "header.php";
           alert("Appointment has been updated");
         }
         confirmAlert();
-        window.location.href = 'patientprofile.php?mykid=<?= $mykid ?>&id_appt=<?= $id_appt ?>';
+        window.location.href = 'listreports.php?mykid=<?= $mykid ?>';
       </script>
 
   <?php
     }
   }
   ?>
-  <!-- /page content -->
+      <!-- /page content -->
 
-  <?php
-  include_once "footer.php";
-  ?>
+      <?php
+      include_once "footer.php";
+      ?>

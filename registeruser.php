@@ -126,7 +126,7 @@ include_once "header.php";
                     <div class="item form-group">
                       <div class="col-md-6 col-sm-6 offset-md-3">
                         <button class="btn btn-primary" type="button">Cancel</button>
-                        <button class="btn btn-primary" type="reset">Reset</button>
+                       
                         <button class="btn btn-primary" type="submit" values="Submit" name="submit"> Register Patient </button>
                       </div>
                     </div>
@@ -353,17 +353,26 @@ include_once "header.php";
                           $month5_2, $month6, $month6_1, $month10, $month12, $month12_1, $month18, $month18_1, $month18_2, $month18_2,
                           $years4, $years7, $years7_1, $years7_2, $years13, $years15
                         );
+
+                        $typevac = array('bcg','hepB','hepB','dtap','hib','ipv',
+                        'dtap', 'hib','ipv',
+                        'dtap','hib','ipv',
+                        'hepB','measles',
+                        'je','mmr','je',
+                        'dtap', 'hib','ipv','je',
+                        'je','bcg', 'dt','mmr',
+                        'hpv', 'tt');
                 
                 
                         $patientid = mysqli_insert_id($dbc);
                         $q = "insert into schedule (sch_patientID, patientName, birthday, mykid, month_0, month0_1, month_1, month_2, month2_1, month2_2, month_3, month3_1, month3_2, month_5, month5_1, month5_2, month_6, month6_1, month_10, month_12, month12_1, month_18, month18_1, month18_2, month18_3, years_4, years_7, years7_1, years7_2, years_13, years_15) 
                        VALUES ('$patientid','$fullname','$birthday','$mykid', '$month0','$month0_1','$month1', '$month2', '$month2_1', '$month2_2', '$month3', '$month3_1', '$month3_2', '$month5', '$month5_1', '$month5_2', '$month6', '$month6_1', '$month10', '$month12', '$month12_1', '$month18', '$month18_1', '$month18_2', '$month18_3', '$years4', '$years7', '$years7_1', '$years7_2', '$years13', '$years15' )";
                         $r = mysqli_query($dbc, $q);
-                
+
                         $schedID = mysqli_insert_id($dbc);
                         for ($i = 0; $i < $typecount; $i++) {
-                          $qappt = "insert into appointment(appt_type, mykid, appt_start, appt_end, appt_status, appt_scheduleID, doc, remark) 
-                              VALUES ('$typeArray[$i]','$mykid', '$typeDate[$i]','$typeDate[$i]', 'Not complete', '$patientid', '-' , '-')";
+                          $qappt = "insert into appointment(appt_type, vtype, mykid, patientName, appt_start, appt_end, appt_status, appt_scheduleID, doc,doc_name, remark) 
+                              VALUES ('$typeArray[$i]','$typevac[$i]','$mykid','$fullname', '$typeDate[$i]','$typeDate[$i]', 'Not complete', '$patientid', '-' ,'-', '-')";
                           $n = mysqli_query($dbc, $qappt);
                         }
                 
