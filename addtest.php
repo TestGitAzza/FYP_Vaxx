@@ -167,9 +167,7 @@ include_once "header.php";
                               echo "No Doctor available. Please select another date/time";
                             } //end of else 
                           } //end of empty error
-                        } //end of if check
-                        
-                        //dsdhjasdhsj
+                        } //end of if check 
                         ?>
                       </div> 
                       <!-- content row -->
